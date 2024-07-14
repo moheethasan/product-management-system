@@ -21,4 +21,7 @@ export const productSchema = new Schema<TProduct>({
   inventory: { type: inventorySchema, required: true },
 });
 
+// create index on the name field
+productSchema.index({ name: "text" });
+
 export const ProductModel = model<TProduct>("Product", productSchema);
