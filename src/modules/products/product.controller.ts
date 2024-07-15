@@ -89,10 +89,12 @@ const updateProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const updatedProductData = req.body;
+    const zodParsedUpdatedData =
+      productValidationSchema.parse(updatedProductData);
 
     const result = await ProductServices.updateProductInDB(
       productId,
-      updatedProductData
+      zodParsedUpdatedData
     );
     if (!result) {
       return res.status(404).json({
@@ -104,7 +106,7 @@ const updateProduct = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: "Product updated successfully!",
-      data: updatedProductData,
+      data: zodParsedUpdatedData,
     });
   } catch (error) {
     res.status(500).json({
